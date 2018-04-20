@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import javax.swing.JOptionPane;
 
+//import org.biojava.nbio.core.search.io.Hsp;
 import org.biojava.nbio.core.search.io.Hit;
 import org.biojava.nbio.core.search.io.Result;
 import org.biojava.nbio.core.search.io.blast.BlastXMLParser;
@@ -23,11 +24,21 @@ import org.biojava.nbio.ws.alignment.qblast.NCBIQBlastService;
 import org.biojava.nbio.core.alignment.template.SequencePair;
 import org.biojava.nbio.core.search.io.*;
 
+/**
+ * @author 		Pim Hoefmans
+ * date 		19-04-2018
+ * klas 		Bi2a
+ * commentaar: 	Deze class is de Blast Class, hierin zou de ORFs worden geblast tegen een database en
+ * de resultaten opgeslagen worden in een tekstfile, maar deze class is nog niet volledig afgerond.
+ * known bugs:  werkt nog niet 
+ */
+
 public class Blast {
 
 		   /**
-		    * @Blast gemaakt aan de hand van biojava.org/docs/api4.2.0/
-		    * @param sequentie 
+		    * @Blast Deze class is een samenvoegsel van code van biojava betreffende blast functionaliteit en
+		    * het opslaan van de resultaten hieruit
+		    * @param seq
 		    */
 		    public Blast(String seq) {
 				String SEQUENCE = seq;
@@ -71,16 +82,16 @@ public class Blast {
 		            while (Hits.hasNext()) {
 		                Hit h = Hits.next();
 		                for (Hsp hsp : h) {
-		                    String seq = hsp.getHspHseq();
+		                    String sequence = hsp.getHspHseq();
 		                    double evalue = hsp.getHspEvalue();
 		                    int score = hsp.getHspScore();
 		                    int identity = hsp.getHspIdentity();
 		                    int positive = hsp.getHspPositive();
 		                    SequencePair alignment = hsp.getAlignment();
-		                    fileWriter.println("sequentie: " + seq + "\n" + "evalue: " + evalue + "\n" + "score: " + score + "\n" + "identity: " + identity + "/n" + "positive: " + positive + "\n" + "alignment: " + alignment);
+		                    fileWriter.println("sequentie: " + sequence + "\n" + "evalue: " + evalue + "\n" + "score: " + score + "\n" + "identity: " + identity + "/n" + "positive: " + positive + "\n" + "alignment: " + alignment);
 		                }
 		                fileWriter.close();
-		                JOptionPane.showMessageDialog(null, "Resultaten van de blast bevinden zich in de blastResultaten.txt in /ORFfinder/blastResultaten.txt");
+		                JOptionPane.showMessageDialog(null, "De BLAST resultaten zijn te vinden inBLASTResults.txt");
 		            }
 		        } catch (Exception e) {
 		            System.out.println(e.getMessage());
@@ -89,10 +100,12 @@ public class Blast {
 		            //clean up
 		            IOUtils.close(writer);
 		            IOUtils.close(reader);
-		            // delete given alignment results from blast server (optional operation) hoihoi
+		            // delete given alignment results from blast server (optional operation)
 		            service.sendDeleteRequest(rid);
 		        }
 		    }
 	}
 
-}
+//Mogelijke query voor blast:
+//
+//

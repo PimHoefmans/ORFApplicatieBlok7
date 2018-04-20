@@ -54,7 +54,7 @@ public class GUI extends JFrame implements ActionListener {
         window.add(labelORFgrootte);
 		
 		fieldORF = new JTextField(5);
-        fieldORF.setText("100");
+        fieldORF.setText("75");
         window.add(fieldORF);
 
 		textpaneSeq = new JTextPane();
@@ -69,7 +69,9 @@ public class GUI extends JFrame implements ActionListener {
 
 	/**
 	 *Deze functie zorgt voor de input van de Search knop, deze knop zorgt ervoor dat een bestand wordt
-	 *geopend en wordt ingeladen. 
+	 *geopend en wordt ingeladen. Ook de input voor de blast button wordt door deze functie verzorgt,
+	 *de blast button roept het blasten aan van alle gevonden ORF's, de resultaten worden opgeslagen 
+	 *in een tekstbestand. zie Blast Class
 	 *@param event
 	 */
 	public void actionPerformed(ActionEvent event) {
@@ -77,7 +79,6 @@ public class GUI extends JFrame implements ActionListener {
 		int Path;
 		File selectedFile;
 
-		//de search button zorgt dat de gebruiker een lokaal bestand kan selecteren
 		if (event.getSource() == buttonSearch) {
 			fileChooser = new JFileChooser();
 			Path = fileChooser.showSaveDialog(this);
@@ -89,11 +90,10 @@ public class GUI extends JFrame implements ActionListener {
 				textpaneSeq.setText(tekstBestand);
 			} catch (FileNotFoundException e1) {
 				JOptionPane.showMessageDialog(null, "Het bestand is niet gevonden");
-			}
+			} new FileLezer(fieldFile.getText(), Integer.parseInt(fieldORF.getText()));
+
 		}
 
-		//de ORF blast button roept de blast aan van alle gevonden ORF's
-		//de resultaten worden opgeslagen in een ..... bestand en geopend in een pop-up
 		if (event.getSource() == buttonBlast) {
 			try {
 				String tekstBestand = FileLezer.fileContent(fieldFile.getText());

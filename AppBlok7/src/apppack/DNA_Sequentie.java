@@ -27,3 +27,6 @@ public class DNA_Sequentie {
 		this.titel = titel;
 	}
 }
+
+//Mogelijke DNA query
+//String query = "INSERT INTO DNA (Sequence, Sequence_ID)" + "VALUES ('" + seq + "','" + titel + "')";
